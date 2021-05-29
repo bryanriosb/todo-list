@@ -1,0 +1,154 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+    <div class="form-container">
+        <form [formGroup] ="form">
+            <div class="form-row">
+                <mat-form-field class="form-group col-md-4"  appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" matInput required (blur)="alias.buildAlias(form)">
+                </mat-form-field>
+
+                <mat-form-field class="from-group col-md-4"  appearance="fill">
+                    <mat-label>Usuario</mat-label>
+                    <mat-select formControlName="user" required>
+                        <mat-option *ngFor="let user of users$ | async" [value]="user.id">
+                            {{ user.name }}                        
+                        </mat-option>        
+                    </mat-select>
+                </mat-form-field>  
+
+                <mat-form-field class="from-group col-md-4"  appearance="fill">
+                    <mat-label>Fecha de Inicio</mat-label>
+                    <input formControlName="startDate" matInput [matDatepicker]="startDateSet" [min]="minDate"
+                    required placeholder="Dia/Mes/Año - Ej: 25/05/2020">
+    
+                    <mat-datepicker-toggle matSuffix [for]="startDateSet">
+                        <ion-icon class="icon-date-picker" matDatepickerToggleIcon name="calendar-outline"></ion-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #startDateSet disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="form-row">
+                <mat-form-field class="form-group col-md-12"  appearance="fill">
+                    <mat-label>Descripción</mat-label>
+                    <input formControlName="description" matInput required>
+                </mat-form-field>
+            </div>
+            
+            <button class="create-btn"  mat-raised-button type="submit" color="primary"
+            [class.custom-spinner]="spinner" [disabled]="spinner || !form.valid || updateBtnTask"
+             (click)="createTask()">
+            <mat-icon class="mat-icons-outlined">add_task</mat-icon>&nbsp;
+                Crear
+            </button>
+        </form>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="tasks-list">
+        <mat-form-field class="col-md-4" appearance="fill">
+            <mat-label>Filtrar Tareas</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Busque por..." #input>
+        </mat-form-field>
+
+        <mat-table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Nombre">
+                    {{element.name}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Descripción">
+                    {{element.name}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Inicio </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Fecha Inicio">
+                    {{element.startDate | date:"short"}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="user">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Usuario </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Usuario">
+                    {{element.user.name}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="updateDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Actualización </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Fecha Actualización">
+                    <ng-container *ngIf="element.updateDate; else not">
+                        {{element.updateDate | date:"short"}} 
+                    </ng-container>
+                    <ng-template #not>
+                        ---
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="finishDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Fin </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Fecha Fin">
+                    <ng-container *ngIf="element.finishDate; else not">
+                        {{element.finishDate | date:"short"}}
+                    </ng-container>
+                    <ng-template #not>
+                        ---
+                    </ng-template>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="advance">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> Avance </mat-header-cell>
+                <mat-cell  *matCellDef="let element" data-label="Avance">
+                    {{element.advance}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="update">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="Editar">
+                    <mat-button-toggle  class="actions" value="italic" (click)="loadDataTask(element)" 
+                     *ngIf="user.role === 'ADMIN' && !element.deleted" 
+                    #tooltip="matTooltip" matTooltip="Modificar Datos"
+                     matTooltipPosition="above">
+                        <mat-icon class="mat-icons-outlined" id="icon-button">edit</mat-icon>
+                    </mat-button-toggle>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header>Terminar</mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="Eliminar">                     
+                    <mat-button-toggle  class="delete" value="italic" *ngIf="user.role === 'ADMIN' && !element.deleted" 
+                    (click)="delete(element)"  #tooltip="matTooltip" matTooltip="Terminar proyecto definitivamente" 
+                    matTooltipPosition="above">
+                        <mat-icon class="mat-delete_outline" id="icon-button">delete_outline</mat-icon>
+                    </mat-button-toggle>
+                </mat-cell>
+            </ng-container>
+    
+    
+            <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row  *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+            <mat-row  class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4"></td>
+            </mat-row>
+        </mat-table>
+    </div>
+   
+</div>
+<div  mat-dialog-actions align="end">
+    <button mat-raised-button (click)="close()">Cerrar</button>
+    <button mat-raised-button color="primary" [class.custom-spinner]="spinner" 
+    [disabled]="spinner" *ngIf="updateBtnTask"  (click)="updateTask()">Actualizar</button>
+</div>

@@ -1,0 +1,52 @@
+<div class="project-container">
+    <form [formGroup] ="form" (ngSubmit)="data.id ? updateProject(): createProject()">
+        <div class="form-row">
+            <mat-form-field class="from-group col-md-3"  appearance="fill">
+                <mat-label>Nombre del proyecto</mat-label>
+                <input formControlName="name" matInput required (blur)="alias.buildAlias(form)">
+            </mat-form-field>
+            
+            <mat-form-field class="from-group col-md-3"  appearance="fill">
+                <mat-label>Alias</mat-label>
+                <input formControlName="alias" matInput required>
+            </mat-form-field>
+
+            <mat-form-field class="from-group col-md-3"  appearance="fill">
+                <mat-label>Fecha de Inicio</mat-label>
+                <input formControlName="startDate" matInput [matDatepicker]="startDateSet" [min]="minDate"
+                required placeholder="Dia/Mes/Año - Ej: 25/05/2020">
+
+                <mat-datepicker-toggle matSuffix [for]="startDateSet">
+                    <ion-icon class="icon-date-picker" matDatepickerToggleIcon name="calendar-outline"></ion-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #startDateSet disabled="false"></mat-datepicker>
+            </mat-form-field>  
+
+            <mat-form-field class="from-group col-md-3"  appearance="fill">
+                <mat-label>Usuario</mat-label>
+                <mat-select formControlName="user" required>
+                    <mat-option *ngFor="let user of users$ | async" [value]="user.id">
+                        {{ user.name }}                        
+                    </mat-option>        
+                </mat-select>
+            </mat-form-field>  
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="from-group col-md-12"  appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <textarea formControlName="description" matInput required></textarea>
+            </mat-form-field>  
+        </div>
+        <button  mat-raised-button type="submit" color="primary"
+        [class.custom-spinner]="spinner" [disabled]="spinner || !form.valid">
+            <ion-icon name="enter-outline"></ion-icon>&nbsp;
+           {{ buttonText }}
+        </button>
+        <button *ngIf="buttonText === 'Crear proyecto'"  mat-raised-button color="primary"
+        routerLink="dashboard">
+            <ion-icon name="enter-outline"></ion-icon>&nbsp;
+           Ir a Tablero
+        </button>
+    </form>
+</div>

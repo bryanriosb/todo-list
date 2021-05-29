@@ -1,5 +1,6 @@
 package com.todo.project.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,8 @@ import com.todo.project.repository.ProjectRepository;
 
 @Service
 public class ProjectService implements IProject {
+	Instant instant = Instant.now();
+	
 	@Autowired
 	private ProjectRepository projectRepository;
 
@@ -26,12 +29,12 @@ public class ProjectService implements IProject {
 	}
 	
 	public Project save(Project createProject) {
-		Project project=projectRepository.save(createProject);
+		Project project = projectRepository.save(createProject);
 		return project;
 	}
 
 	public Project update(Long id, Project project) {
-		Optional<Project> retrieved=projectRepository.findById(id);
+		Optional<Project> retrieved = projectRepository.findById(id);
 		if(retrieved == null)
 			try {
 				throw new Exception("Usuario inexistent");
@@ -45,7 +48,7 @@ public class ProjectService implements IProject {
 	}
 	
 	public Project delete(Long id) {
-		Optional<Project> retrieved=projectRepository.findById(id);
+		Optional<Project> retrieved = projectRepository.findById(id);
 		if (retrieved == null)
 			try {
 				throw new Exception("Usuario inexistente");
@@ -54,7 +57,11 @@ public class ProjectService implements IProject {
 				e.printStackTrace();
 			}
 		
-		projectRepository.deleteById(id);
+		Project project = retrieved.get();
+		project.setDeleted(true);
+		project.setFinishDate(instant.toEpochMilli());
+		projectRepository.save(project);
+		
 		return retrieved.get();
 	}
 }

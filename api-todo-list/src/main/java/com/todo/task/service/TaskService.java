@@ -1,5 +1,6 @@
 package com.todo.task.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,8 @@ import com.todo.task.repository.TaskRepository;
 
 @Service
 public class TaskService  implements ITask {
+	Instant instant = Instant.now();
+	
 	@Autowired
 	private TaskRepository taskRepository;
 
@@ -18,7 +21,12 @@ public class TaskService  implements ITask {
 	public List<Task> findAll() {
 		return taskRepository.findAll();
 	}
-
+	
+	@Override
+	public List<Task> findAllByProject(Long id) {
+		return taskRepository.findAllTaskByProject(id);
+	}
+	
 	@Override
 	public Optional<Task> findById(Long id) {
 		return taskRepository.findById(id);
@@ -30,7 +38,7 @@ public class TaskService  implements ITask {
 	}
 	
 	public Task save(Task createTask) {
-		Task task=taskRepository.save(createTask);
+		Task task = taskRepository.save(createTask);
 		return task;
 	}
 
@@ -57,8 +65,11 @@ public class TaskService  implements ITask {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		Task task = retrieved.get();
+		task.setDeleted(true);
+		task.setFinishDate(instant.toEpochMilli());
+		taskRepository.save(task);
 		
-		taskRepository.deleteById(id);
 		return retrieved.get();
 	}
 

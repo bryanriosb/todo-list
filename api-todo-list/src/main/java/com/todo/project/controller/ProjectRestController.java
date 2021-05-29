@@ -22,12 +22,17 @@ import java.util.List;
 
 import com.todo.project.model.Project;
 import com.todo.project.service.ProjectService;
+import com.todo.user.service.UserService;
+
 
 @RestController
 @RequestMapping("/api/v1")
 public class ProjectRestController {
     @Autowired
 	ProjectService projectService;
+
+	@Autowired
+	UserService userService;
     
 	@GetMapping("/projects")
 	public List<Project> getAllProjects(Authentication authentication) {
@@ -47,7 +52,6 @@ public class ProjectRestController {
 
     @PostMapping("/projects")
 	public ResponseEntity<Project> saveProjects(@RequestBody Project createTask, Authentication auth) {
-		System.out.println(createTask.getName()+"  "+auth.getName());
 		return ResponseEntity.status(HttpStatus.CREATED).body((projectService.save(createTask)));
 	}
 
@@ -61,16 +65,4 @@ public class ProjectRestController {
         projectService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
-    /*
-    @GetMapping("/projects/search")
-	public ResponseEntity<Project> taskDetails(Authentication authentication, @RequestParam("taskName") String taskName) throws Exception {
-		System.out.println(authentication.getName().toString());
-		Project project = projectService.findByTaskName(taskName);
-		if (project == null) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarea inexistente");
-		}
-		return ResponseEntity.ok().body(project);
-	}
-    */
 }

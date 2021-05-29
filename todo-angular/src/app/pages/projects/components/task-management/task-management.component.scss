@@ -1,0 +1,25 @@
+.form-container {
+    margin-bottom: 20px;
+
+    .create-btn {
+        position: relative;
+        height: 3.2rem;
+    }
+}
+
+.tasks-list {
+    margin-top: 20px;
+}
+
+.delete {
+    background-color: rgb(204, 6, 6);
+}
+
+.actions {
+    background-color: #3f51b5;
+}
+
+#icon-button {
+    font-size: 22px;
+    color: white;
+}

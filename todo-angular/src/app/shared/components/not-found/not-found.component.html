@@ -1,0 +1,15 @@
+<mat-card class="main">
+    <div class="error-content">
+        <img src="assets/img/404.gif" width="62%" alt="error">
+
+        <h2>Página No Encontrada</h2>
+        <p>
+            Es posible que la página que está buscando se haya eliminado, si se cambió el nombre o no está
+            disponible temporalmente.
+        </p>
+
+        <button mat-raised-button [routerLink]="['/pages/dashboard']" routerLinkActive="router-link-active"  color="primary">
+            Ir al tablero
+        </button>
+    </div>
+</mat-card>

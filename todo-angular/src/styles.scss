@@ -1,0 +1,161 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.form-box {
+    background-color: #eef3ff;
+    padding: 20px 20px 0 20px;
+
+    margin-bottom: 20px;
+    border: 0.6px solid #006fd6; 
+    border-radius: 5px; 
+}
+
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 48px;
+    padding: 5px !important;
+    margin: -11px 3px !important;
+}
+
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+}
+
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+}
+
+.subheader {
+    font-size: 18px !important;
+    margin-left: 6px;
+    margin-top: 30px;
+}
+
+.question-icon {
+    position: relative;
+    top: 5px;
+    font-size: 22px;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+}
+
+.style-succes {
+  color: white !important;
+  font-weight: 500;
+  background-color: #3f51b5;
+}
+
+.style-error {
+  color: white !important;
+  font-weight: 500;
+  background-color: #f44336;
+}
+
+.style-warning {
+  color: #212529 !important;
+  font-weight: 500;
+  background-color: #fad337;
+}
+
+.custom-spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: #3f51b5;
+    animation: spinner .8s linear infinite;
+}
+
+
+
+#table {
+    display: table;
+}
+
+.mat-header-cell {
+    text-align: center;
+    justify-content:center;
+}
+
+.mat-cell {
+    text-align: center;
+    justify-content:center;
+}
+
+
+@media screen and (max-width: 850px) {      
+    .mat-table {
+      border: 0;
+      vertical-align: middle
+    }
+    
+    .mat-table caption {
+      font-size: 1em;
+    }
+  
+    .mat-table .mat-header-cell { 
+      border: 10px solid;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    .mat-table .mat-row {
+      border-bottom: 5px solid #ddd;
+      display: block;
+    }
+    /*
+    .mat-table .mat-row:nth-child(even) {background: #CCC}
+    .mat-table .mat-row:nth-child(odd) {background: #FFF}
+    */
+    .mat-table .mat-cell {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 1em;
+      text-align: right;
+      font-weight: bold;
+      height:30px;
+      padding-right: 20px;
+      margin-bottom: 4%;
+    }
+    .mat-table .mat-cell:before {
+      /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: normal;
+      padding-left: 20px;
+      
+      font-size: .85em;
+    }
+    
+    .mat-table .mat-cell:last-child {
+      border-bottom: 0;
+    }
+    
+    .mat-table .mat-cell:first-child {
+      padding-left: 4px;
+      margin-top: 4%;
+    }
+  
+  }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,7 +34,12 @@ public class TaskRestController {
 	public List<Task> getAllTasks(Authentication authentication) {
 		return taskService.findAll();
 	}
-
+	
+	@GetMapping("/tasks/project/{id}")
+	public List<Task> getAllTasksByProject(@PathVariable("id") Long id) {
+		return taskService.findAllByProject(id);
+	}
+	
     @GetMapping("/tasks/assigned")
 	@PostFilter("filterObject.email==authentication.name")
 	public List<Task> getTaskOwnedBy() {

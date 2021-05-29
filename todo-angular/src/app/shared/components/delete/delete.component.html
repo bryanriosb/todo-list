@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Borrar</h1>
+<div mat-dialog-content>
+    <p>¿Está seguro de borrar definitivamente?</p>
+</div>
+<div  mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button color="primary" [class.custom-spinner]="spinner" 
+    [disabled]="spinner" (click)="delete()">Confirmar</button>
+</div>

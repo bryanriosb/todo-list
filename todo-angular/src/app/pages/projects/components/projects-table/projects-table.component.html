@@ -1,0 +1,150 @@
+<ng-container *ngIf="dataSource.data.length > 0; else not">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Proyectos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="form-row">
+                <mat-form-field class="col-md-4" appearance="fill">
+                    <mat-label>Filtrar Información</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Busque por..." #input>
+                </mat-form-field>
+    
+                <div class="col-md-4">
+                    <button class="button-new" mat-raised-button color="primary" routerLink="/pages/projects">
+                        <ion-icon id="icon-button" slot="start" name="add-circle-outline"></ion-icon>
+                        Nuevo Proyecto
+                    </button>
+                </div>                    
+            </div>
+    
+            <ng-template #spinner>
+                <div class="spinner-container">
+                    <mat-spinner diameter="40"></mat-spinner>
+                </div>
+            </ng-template>
+    
+            <mat-table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="name">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Nombre">
+                        {{element.name}} 
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="description">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Descripción">
+                        {{element.description}} 
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="alias">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Alias </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Alias">
+                        {{element.alias}}
+                    </mat-cell>
+                </ng-container>
+                    
+                <ng-container matColumnDef="startDate">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Inicio </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Fecha Inicio">
+                        {{element.startDate | date:"short"}} 
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="finishDate">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Fin </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Fecha Fin">
+                        <ng-container *ngIf="element.finishDate; else not">
+                            {{element.finishDate | date:"short"}}
+                        </ng-container>
+                        <ng-template #not>
+                            ---
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="responsable">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Responsable </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Responsable">
+                        {{element.user.name}} 
+                    </mat-cell>
+                </ng-container>
+        
+                <ng-container matColumnDef="creationDate">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Creación </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Fecha Creación">
+                        {{element.creationDate | date:"short"}} 
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="updateDate">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header> Fecha Actualización </mat-header-cell>
+                    <mat-cell  *matCellDef="let element" data-label="Fecha Actualización">
+                        <ng-container *ngIf="element.updateDate; else not">
+                            {{element.updateDate | date:"short"}} 
+                        </ng-container>
+                        <ng-template #not>
+                            ---
+                        </ng-template>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="tasks">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header>Tareas</mat-header-cell>
+                    <mat-cell *matCellDef="let element" data-label="Tareas">                     
+                        <mat-button-toggle  class="actions" value="italic" 
+                        (click)="tasks(element)"  #tooltip="matTooltip" matTooltip="Gestión y visualización de tareas"
+                         matTooltipPosition="above">
+                            <mat-icon class="mat-icons-outlined" id="icon-button">task_alt</mat-icon>
+                        </mat-button-toggle>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="update">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+                    <mat-cell *matCellDef="let element" data-label="Editar">
+                        <mat-button-toggle  class="actions" value="italic" (click)="update(element)" 
+                         *ngIf="user.role === 'ADMIN' && !element.deleted" 
+                        #tooltip="matTooltip" matTooltip="Modificar Datos"
+                         matTooltipPosition="above">
+                            <mat-icon class="mat-icons-outlined" id="icon-button">edit</mat-icon>
+                        </mat-button-toggle>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                    <mat-header-cell  *matHeaderCellDef mat-sort-header>Terminar</mat-header-cell>
+                    <mat-cell *matCellDef="let element" data-label="Eliminar">                     
+                        <mat-button-toggle  class="delete" value="italic" *ngIf="user.role === 'ADMIN' && !element.deleted" 
+                        (click)="delete(element)"  #tooltip="matTooltip" matTooltip="Terminar proyecto definitivamente" 
+                        matTooltipPosition="above">
+                            <mat-icon class="mat-delete_outline" id="icon-button">delete_outline</mat-icon>
+                        </mat-button-toggle>
+                    </mat-cell>
+                </ng-container>
+    
+                <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row  *matRowDef="let row; columns: displayedColumns"></mat-row>
+                
+                <mat-row  class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4"></td>
+                </mat-row>
+    
+            </mat-table>
+    
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>         
+        </mat-card-content>
+    </mat-card>
+</ng-container>
+<ng-template #not>
+    <div class="not-projects">
+        <button class="button-new" mat-raised-button color="primary" routerLink="/pages/projects">
+            <ion-icon id="icon-button" slot="start" name="add-circle-outline"></ion-icon>
+            Nuevo Proyecto
+        </button>
+        <h1>No tienes proyectos creados</h1>
+    </div>    
+</ng-template>     
+

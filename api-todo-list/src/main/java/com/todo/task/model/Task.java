@@ -24,25 +24,39 @@ public class Task {
 	@JoinColumn(name = "tarea_proyecto")
 	private Project project;
 	
-	private @Column(name = "nombre") String name;
-	private @Column(name = "descripcion") String description;
-	private String alias;
+	private @Column(length = 50, name = "nombre") String name;
+	private @Column(length = 300, name = "descripcion") String description;
+	private @Column(length = 50, unique = true)String alias;
+	private @Column(name = "Avance") int advance;
 	private @Column(name = "fecha_inicio") Long startDate;
 	private @Column(name = "fecha_finalizacion") Long finishDate;
+	private @Column(name = "tiempo_ejecución") String time;
+	private @Column(name="fecha_creacion") Long creationDate;
+	private @Column(name="fecha_actualizacion") Long updateDate;
+	private @Column(name="eliminado") Boolean deleted;
 	
 	@ManyToOne
 	private @JoinColumn(name = "tarea_usuario") 
 	User user;
 	
-	public Task(Project project, String name, String description, String alias, Long startDate, Long finishDate,
-			User user) {
+	
+	public Task(){}
+	
+	
+	public Task(Project project, String name, String description, String alias, int advance, Long startDate,
+			Long finishDate, String time, Long creationDate, Long updateDate, Boolean deleted, User user) {
 		super();
 		this.project = project;
 		this.name = name;
 		this.description = description;
 		this.alias = alias;
+		this.advance = advance;
 		this.startDate = startDate;
 		this.finishDate = finishDate;
+		this.time = time;
+		this.creationDate = creationDate;
+		this.updateDate = updateDate;
+		this.deleted = deleted;
 		this.user = user;
 	}
 
@@ -89,6 +103,14 @@ public class Task {
 	public Long getStartDate() {
 		return startDate;
 	}
+	
+	public int getAdvance() {
+		return advance;
+	}
+
+	public void setAdvance(int advance) {
+		this.advance = advance;
+	}
 
 	public void setStartDate(Long startDate) {
 		this.startDate = startDate;
@@ -101,6 +123,40 @@ public class Task {
 	public void setFinishDate(Long finishDate) {
 		this.finishDate = finishDate;
 	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+	public Long getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Long getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Long updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+
+
 
 	public User getUser() {
 		return user;

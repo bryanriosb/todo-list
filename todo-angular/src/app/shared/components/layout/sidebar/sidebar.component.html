@@ -1,0 +1,55 @@
+<mat-nav-list>
+    <div class="profile-card">
+        <img src="https://www.flaticon.com/svg/static/icons/svg/3618/3618051.svg" alt="profile">
+        <div class="header">
+            <h2>{{user.name}}</h2>
+            <h4 class="sub-data">{{user.email}}</h4>
+            <h4 class="sub-data">
+                <span class="text-role" *ngIf="user.role === 'ADMIN'">Administrador</span>
+            </h4>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h2 matSubheader>Tablero</h2>
+
+    <a mat-button routerLink="dashboard">
+        <ion-icon class="nested-icon" name="list-outline"></ion-icon>
+        Actividades
+    </a>
+
+    <mat-divider></mat-divider>
+
+    <ng-container *ngIf="user.role === 'ADMIN'">
+        <h2 matSubheader >Proyectos</h2>
+
+        <a mat-button routerLink="projects">
+            <ion-icon class="nested-icon" name="trail-sign-outline"></ion-icon>
+            Crear Proyecto
+        </a>
+    
+        <mat-divider></mat-divider>
+
+        <h2 matSubheader >Usuarios</h2>
+    
+        <a mat-button routerLink="users">
+            <ion-icon class="nested-icon" name="person-add-outline"></ion-icon>
+            Gestión de usuarios
+        </a>
+    </ng-container>
+
+    <ng-container *ngIf="user.role === 'LIDER'">
+        <h2 matSubheader >Usuarios</h2>
+    
+        <a mat-button routerLink="users">
+            <ion-icon class="nested-icon" name="person-add-outline"></ion-icon>
+            Listar usuarios
+        </a>
+    </ng-container>
+</mat-nav-list>
+
+
+
+
+

@@ -1,0 +1,75 @@
+button {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.login-container{
+    background-color: white;
+    position:relative;
+    box-sizing: border-box;
+     padding-top: 45px;
+    max-width: 460px;
+    padding: 50px;
+    margin-right:auto;
+    margin-left: auto;
+    margin-top:auto;
+
+}
+
+.login-container .loginLogo{
+    position: relative;
+    margin-top: 30%;
+    width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    z-index:1003;
+    display: block;
+    z-index: 1;
+}
+
+.input-icon {
+    position: relative;
+    top: -1px;
+    margin-bottom: 1px;
+    
+    font-size: 23px;
+}
+
+.input-value {
+    position: relative;
+    bottom: 8px;
+}
+
+.field-full-width {
+    width: 100%;
+}
+
+.register-link {
+    text-align: center;
+}
+
+.footer{
+    height: 80%;
+    width: 60%;
+    position: absolute;
+    left: 50%;
+    top: 700px;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    
+
+}
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    z-index: 3;
+}   
+
+.note {
+    color: #3880ff;
+}
+

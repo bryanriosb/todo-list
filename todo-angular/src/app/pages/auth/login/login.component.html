@@ -1,0 +1,38 @@
+
+<div class="login-container">
+
+    <div class="loginLogo">
+    <img src="assets/img/logo-todo.png" width="90%">
+    </div> 
+
+    <form [formGroup]="loginForm" (ngSubmit)="signInEmailPass()">
+        <mat-form-field class="field-full-width" appearance="fill">
+        <mat-label>
+            <ion-icon class="input-icon" color="primary" slot="start" name="mail-outline"></ion-icon>&nbsp;
+            <span class="input-value" color="primary">Correo electrónico</span>
+        </mat-label>
+        <input type="email" matInput placeholder="correo@ejemplo.com" formControlName="email">
+        </mat-form-field>
+    
+        <mat-form-field class="field-full-width" appearance="fill">
+            <mat-label>
+                <ion-icon class="input-icon" color="primary" slot="start" name="key-outline"></ion-icon>&nbsp;
+                <span class="input-value" color="primary">Contraseña</span>
+            </mat-label>
+            <input type="password" matInput  formControlName="password">
+        </mat-form-field>
+    
+
+        <button  mat-raised-button type="submit" color="primary"
+        [class.custom-spinner]="spinner" [disabled]="spinner || !loginForm.valid">
+            <ion-icon name="enter-outline"></ion-icon>&nbsp;
+            Iniciar Sesión
+        </button>
+    </form>
+</div>
+
+
+
+
+  
+  

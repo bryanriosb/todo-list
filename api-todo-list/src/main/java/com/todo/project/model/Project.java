@@ -18,9 +18,9 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private @Column(name = "nombre") String name;
-	private @Column(name = "descripcion") String description;
-	private String alias;
+	private @Column(length = 50, name = "nombre") String name;
+	private @Column(length = 300, name = "descripcion") String description;
+	private @Column(length = 50, unique = true)String alias;
 	private @Column(name = "estado") Boolean state;
 	private @Column(name = "fecha_inicio") Long startDate;
 	private @Column(name = "fecha_finalizacion") Long finishDate;
@@ -32,6 +32,8 @@ public class Project {
 	private @Column(name="eliminado") Boolean deleted;
 	private @Column(name="fecha_creacion") Long creationDate;
 	private @Column(name="fecha_actualizacion") Long updateDate;
+	
+	public Project(){}
 		
 	public Project(String name, String description, String alias, Boolean state, Long startDate, Long finishDate,
 			User user, Boolean deleted, Long creationDate, Long updateDate) {

@@ -1,0 +1,81 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Gestión de Usuarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup] ="form">
+            <div class="form-row">
+                <mat-form-field class="form-group col-md-4"  appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" matInput required>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-4"  appearance="fill">
+                    <mat-label>Cédula</mat-label>
+                    <input formControlName="identityCard" type="number" matInput required>
+                </mat-form-field>
+
+                <mat-form-field class="from-group col-md-4"  appearance="fill">
+                    <mat-label>Rol</mat-label>
+                    <mat-select formControlName="role" required>
+                        <mat-option *ngFor="let rol of roles$ | async" [value]="rol.name">
+                            {{ rol.name }}                        
+                        </mat-option>        
+                    </mat-select>
+                </mat-form-field>  
+            </div>
+
+            <div class="form-row">
+                <mat-form-field class="form-group col-md-6"  appearance="fill">
+                    <mat-label>Correo</mat-label>
+                    <input type="email" formControlName="email" matInput required>
+                </mat-form-field>
+
+                <mat-form-field class="form-group col-md-6"  appearance="fill">
+                    <mat-label>Contraseña</mat-label>
+                    <input type="password" formControlName="password" matInput required>
+                </mat-form-field>
+            </div>
+            
+            <button class="create-btn"  mat-raised-button type="submit" color="primary"
+            [class.custom-spinner]="spinner" [disabled]="spinner || !form.valid"
+             (click)="createUser()">
+            <mat-icon class="mat-icons-outlined">person_outline</mat-icon>&nbsp;
+                Crear
+            </button>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<div class="users-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Lista de Usuarios</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ion-list>
+                <ion-list-header>
+                  Total de usuarios {{(users$ | async)?.length}} incluyendolo.
+                </ion-list-header>
+                
+                <ng-container *ngFor="let usr of (users$ | async); let i = index;">
+                    <ion-item *ngIf="user.id !== usr.id">
+                        <ion-avatar slot="start">
+                          <img src="assets/icons/user.svg">
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>{{i + 1}}. {{usr.name}}</h2>
+                          <h3>Rol: {{usr.role}}</h3>
+                          <p>Cédula: {{usr.identityCard}}</p>
+                          <p>Fecha de creación: {{usr.creationDate | date:"mediumDate"}}</p>
+                        </ion-label>
+                        <ion-button size="medium" color="danger" slot="end" (click)="delete(usr)">
+                          Borrar
+                        </ion-button>
+                      </ion-item>
+                </ng-container>
+              </ion-list>
+        </mat-card-content>
+    </mat-card>
+</div>
+

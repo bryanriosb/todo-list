@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+
+        <button mat-icon-button (click)="toggleSideBar()" #tooltip="matTooltip" matTooltip="Menu" matTooltipPosition="below">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a routerLink="/pages/dashboard">
+            <img class="logo" src="assets/img/logo-todo-white.png" alt="logo">
+        </a>
+        
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+            <ul fxLayout="row" fxLayoutGap="15px">
+                <li>
+                    <button class="button-setting" mat-button [matMenuTriggerFor]="menu"
+                    #tooltip="matTooltip" matTooltip="Cuenta" matTooltipPosition="below">
+                        <i class="material-icons-outlined">account_circle</i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+
+                        <button mat-menu-item (click)="account()">
+                            <mat-icon>perm_identity</mat-icon>
+                            Cuenta
+                        </button>
+
+                        <button mat-menu-item (click)="signOut()">
+                            <mat-icon>exit_to_app</mat-icon>
+                            Salir
+                        </button>
+
+                    </mat-menu>
+                </li>
+            </ul>
+
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

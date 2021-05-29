@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +30,9 @@ public class UserRestController {
     @Autowired
 	UserService service;
     
- 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
 	@PostMapping("/login")
 	public ResponseEntity<User> signIn(@RequestBody User user, Authentication auth) {
 		User loginUser = service.findByEmail(auth.getName());
@@ -44,7 +47,8 @@ public class UserRestController {
 
     @PostMapping("/users")
 	public ResponseEntity<User> saveUsers(@RequestBody User createUser, Authentication auth) {
-		System.out.println(createUser.getEmail()+"  "+auth.getName());
+		String pass = encoder.encode(createUser.getPassword());
+		createUser.setPassword(pass);
 		return ResponseEntity.status(HttpStatus.CREATED).body((service.save(createUser)));
 	}
 

@@ -9,4 +9,6 @@ public interface ITask {
     public List<Task> findAll();
 
 	public Optional <Task> findById(Long id);
+	
+	public List<Task> findAllByProject(Long id);
 }

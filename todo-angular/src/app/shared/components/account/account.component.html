@@ -1,0 +1,35 @@
+
+
+<mat-card-header>
+    <mat-card-title>Datos de Cuenta</mat-card-title>
+    <mat-card-subtitle>ID: {{user.id}}</mat-card-subtitle>
+</mat-card-header>
+<mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col size-lg="5" size-md="5" size-sm="12" size-xs="12">                                          
+                <p class="title">Datos Contacto</p>
+
+                <p class="head-row">
+                    <ion-icon class="icon" name="mail-outline"></ion-icon>&nbsp;{{ user.email  }}
+                </p>
+                    
+            </ion-col>
+
+            <ion-col size-lg="5" size-md="5" size-sm="12" size-xs="12">
+        
+                <p class="title">Datos Personales</p>
+                <p class="head-row"><span class="head-info">Nombre: </span>{{ user.name }}</p>
+                <p class="head-row"><span class="head-info">Cédula: </span>{{ user.identityCard }}</p>
+                <p class="head-row"><span class="head-info">Rol: </span>{{ user.role }}</p>
+                <p class="head-row"><span class="head-info">Fecha Creación: </span>{{ user.creationDate | date:"mediumDate"}}</p>
+                
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</mat-card-content>
+
+

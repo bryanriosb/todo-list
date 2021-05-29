@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 
 @Entity
 @Table(name = "usuario")
@@ -14,17 +16,19 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private  int id;
-	private @Column(name = "cedula") String identityCard;
-	private @Column(name = "nombre") String name;
-	private @Column(name = "correo") String email;
-	private @Column(name = "contrasena") String password;
+	@NotNull
+	
+	private @Column(length = 80, name = "cedula", unique = true) String identityCard;
+	private @Column(length = 80, name = "nombre") String name;
+	private @Column(length = 80, name = "correo", unique = true) String email;
+	private @Column(length = 80, name = "contrasena") String password;
 	private @Column(name = "stado") Boolean state;
 	private @Column(name = "eliminado") Boolean deleted;
 	private @Column(name = "rol") String role;
 	private @Column(name = "fecha_creacion") Long creationDate;
 	private @Column(name = "fecha_actualizacion") Long updateDate;
 	
-	public User(Long id, String identityCard, String name, String email, String role, String password, Boolean state,
+	public User(int id, String identityCard, String name, String email, String role, String password, Boolean state,
 			Boolean deleted, Long creationDate, Long updateDate) {
 		super();
 		this.identityCard = identityCard;
