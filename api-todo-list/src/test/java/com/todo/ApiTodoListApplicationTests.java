@@ -10,18 +10,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.Instant;
 
 import com.todo.user.model.User;
+import com.todo.user.model.Role;
+import com.todo.user.repository.RoleRepository;
 import com.todo.user.repository.UserRepository;
 
 @SpringBootTest
 class ApiTodoListApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	Instant instant = Instant.now();
-
+	
+	/* Creación de Usuarios principales */
+	
 	@Test
 	void createAdminUser() {
 		User user = new User();
@@ -74,5 +81,37 @@ class ApiTodoListApplicationTests {
 		User created = userRepository.save(user);
 
 		assertTrue(created.getPassword().equalsIgnoreCase(user.getPassword()));
+	}
+	
+	/* Creación de Roles */
+	
+	@Test
+	void createAdminRole() {
+		Role role = new Role();
+		role.setName("ADMIN");
+		
+		Role created = roleRepository.save(role);
+
+		assertTrue(created.getName().equalsIgnoreCase(role.getName()));
+	}
+	
+	@Test
+	void createLiderRole() {
+		Role role = new Role();
+		role.setName("LIDER");
+		
+		Role created = roleRepository.save(role);
+
+		assertTrue(created.getName().equalsIgnoreCase(role.getName()));
+	}
+	
+	@Test
+	void createUserRole() {
+		Role role = new Role();
+		role.setName("USER");
+		
+		Role created = roleRepository.save(role);
+
+		assertTrue(created.getName().equalsIgnoreCase(role.getName()));
 	}
 }
