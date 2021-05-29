@@ -11,9 +11,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 
 
 
@@ -41,15 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {	
 		auth.userDetailsService(userDetailsService).passwordEncoder(bcrypt);
 	}
-	
-	
-
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//	}
-//	
-	
+		
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {		
 		http.authorizeRequests()
@@ -62,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET,"/api/v1/projects").hasAnyRole("ADMIN","LIDER","USER")
         .antMatchers(HttpMethod.GET,"/api/v1/task").hasAnyRole("ADMIN","LIDER","USER")
 		.antMatchers(HttpMethod.GET,"/api/v1/roles").hasAnyRole("ADMIN")
-		.antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN")
+		.antMatchers(HttpMethod.PUT).hasAnyRole("ADMIN","LIDER","USER")
 		.antMatchers(HttpMethod.DELETE).hasAnyRole("ADMIN");
 		
 		http.cors();

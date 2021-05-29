@@ -1,3 +1,5 @@
 
 
 <app-projects-table *ngIf="user.role === 'ADMIN' || user.role === 'LIDER'"></app-projects-table>
+
+<app-tasks *ngIf="user.role === 'USER'"></app-tasks>

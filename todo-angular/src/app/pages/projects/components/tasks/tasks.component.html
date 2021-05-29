@@ -1,0 +1,56 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Actividades</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            Tenga en cuenta que para reportar los cambios en cada tarea es necesario definir 
+            el progreso de cada actividad en una escala del 0 al 100% de cumplimiento.
+        </p>
+        <div class="example-container">
+            <h2>Para Hacer</h2>        
+            <div
+            cdkDropList
+            #todoList="cdkDropList"
+            [cdkDropListData]="todo"
+            [cdkDropListConnectedTo]="[doneList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of todo" cdkDrag>
+                <div class="form-row">
+                    <mat-form-field class="col-md-3"  appearance="fill" *ngIf="item.advance < 100">
+                        <mat-label>%</mat-label>
+                        <input type="number" [formControl]="advance" min="0" max="100" 
+                        matInput (blur)="updateAdvance(item)">
+                    </mat-form-field>
+                    <div class="col-md-6">
+                        <h4>{{item.project.name}}</h4>
+                        <mat-label><b>{{item.name}}</b></mat-label>
+                        <p>{{item.description}}</p>
+                        <p>Inicio: {{item.startDate | date:"mediumDate"}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-progress-bar mode="determinate" [value]="item.advance"></mat-progress-bar>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+      
+        <div class="example-container">
+            <h2>Hecho</h2>
+            <div
+            cdkDropList
+            #doneList="cdkDropList"
+            [cdkDropListData]="done"
+            [cdkDropListConnectedTo]="[todoList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of done" cdkDrag>
+                <mat-label><b>{{item.name}}</b></mat-label>
+                <p>Realizado: {{item.finshDate | date:"mediumDate"}}</p>
+            </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

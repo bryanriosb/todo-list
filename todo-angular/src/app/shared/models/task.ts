@@ -7,7 +7,8 @@ export class Task {
     advance:     number;
     startDate:   number;
     finishDate:  number;
-    time:        number;
+    updateDate:  number;
+    time:        string;
     user:        User;
 }
 

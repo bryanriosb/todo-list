@@ -84,8 +84,8 @@ export class TaskManagementComponent implements OnInit, AfterViewInit {
       state: [true],
       user: [null, Validators.required],
       time: [null],
-      advance: [],
-      deleted: [false],
+      advance: [0],
+      deleted: [],
       startDate: [new Date(), Validators.required],
       creationDate: [new Date().getTime()],
       updateDate: [],
@@ -196,7 +196,15 @@ export class TaskManagementComponent implements OnInit, AfterViewInit {
       let user = {id: this.form.value.user};
       this.form.value.user = user;
 
+      this.form.get('deleted').setValue(false);
+
       let response = await this.rest.post('tasks', this.form.value).toPromise();
+
+      if (response) {
+        setTimeout(() => {
+          this.loadData();
+        }, 1000);
+      }
       
       this.toast.succes('Tarea creada correctamente');
       this.spinner = false;

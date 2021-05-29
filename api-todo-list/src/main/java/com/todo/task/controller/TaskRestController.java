@@ -41,7 +41,7 @@ public class TaskRestController {
 	}
 	
     @GetMapping("/tasks/assigned")
-	@PostFilter("filterObject.email==authentication.name")
+	@PostFilter("filterObject.user.email==authentication.name AND filterObject.deleted==false")
 	public List<Task> getTaskOwnedBy() {
 		return taskService.findAll();
 	}
@@ -67,16 +67,4 @@ public class TaskRestController {
         taskService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
-
-	/*
-    @GetMapping("/tasks/search")
-	public ResponseEntity<Task> taskDetails(Authentication authentication, @RequestParam("taskName") String taskName) throws Exception {
-		System.out.println(authentication.getName().toString());
-		Task task = taskService.findByTaskName(taskName);
-		if (task == null) {
-			ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarea inexistente");
-		}
-		return ResponseEntity.ok().body(task);
-	}
-	*/
 }

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="user.role === 'ADMIN'">
     <mat-card-header>
         <mat-card-title>Gestión de Usuarios</mat-card-title>
     </mat-card-header>
@@ -55,7 +55,7 @@
         <mat-card-content>
             <ion-list>
                 <ion-list-header>
-                  Total de usuarios {{(users$ | async)?.length}} incluyendolo.
+                  Total de usuarios {{(users$ | async)?.length}} incluyéndose.
                 </ion-list-header>
                 
                 <ng-container *ngFor="let usr of (users$ | async); let i = index;">
@@ -69,7 +69,8 @@
                           <p>Cédula: {{usr.identityCard}}</p>
                           <p>Fecha de creación: {{usr.creationDate | date:"mediumDate"}}</p>
                         </ion-label>
-                        <ion-button size="medium" color="danger" slot="end" (click)="delete(usr)">
+                        <ion-button *ngIf="user.role === 'ADMIN'" size="medium" color="danger" 
+                        slot="end" (click)="delete(usr)">
                           Borrar
                         </ion-button>
                       </ion-item>

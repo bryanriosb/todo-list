@@ -8,6 +8,8 @@ import { ProjectsTableComponent } from './components/projects-table/projects-tab
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from '../../shared/shared.module';
 import { TaskManagementComponent } from './components/task-management/task-management.component';
+import { TasksComponent } from './components/tasks/tasks.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -16,15 +18,18 @@ import { TaskManagementComponent } from './components/task-management/task-manag
     ProjectsComponent,
     ProjectManagementComponent,
     ProjectsTableComponent,
-    TaskManagementComponent
+    TaskManagementComponent,
+    TasksComponent
   ],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
-    SharedModule
+    SharedModule,
+    DragDropModule
   ],
   exports: [
-    ProjectsTableComponent
+    ProjectsTableComponent,
+    TasksComponent
   ],
   providers: [
     { 
