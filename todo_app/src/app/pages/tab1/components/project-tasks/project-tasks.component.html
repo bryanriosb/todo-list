@@ -1,0 +1,13 @@
+<app-modal-header [color]="'primary'" [title]="'Tareas'"></app-modal-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngFor="let task of (tasks$ | async); let i = index">
+    <ion-item (click)="taskDetails(task)">
+      <ion-label>{{i + 1}} {{task.name}}</ion-label>
+      <ion-button fill="clear" slot="end">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

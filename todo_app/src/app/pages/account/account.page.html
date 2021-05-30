@@ -1,0 +1,62 @@
+
+<ion-content>
+
+  <ion-buttons class="menu-btn">
+    <ion-menu-button  menu="slider-menu">
+      <ion-icon color="light" src="assets/icon/menu.svg"></ion-icon>
+    </ion-menu-button>
+  </ion-buttons>
+  <ion-buttons class="logout-btn">
+    <ion-button fill="clear">
+      <ion-icon color="light" name="settings-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+  <div class="menu-header-bg"></div>
+
+  <div class="header-container">
+    <div class="profle-image">
+      <img src="assets/icon/user.svg" alt="profile"/>
+      <ion-label>
+        <h2>{{userData.user.name}} {{userData.user.last_name}}</h2>
+        <p>ID: {{userData.user.id}}</p>
+      </ion-label>
+    </div>
+  </div>
+
+  <div class="content-container ion-padding">
+    <h6>Cuenta</h6>
+    <ion-list lines="none">
+      <ion-item (click)="userDetail()">
+        <ion-label>
+          <ion-icon color="primary" name="person-outline"></ion-icon> Perfil
+        </ion-label>
+        <ion-icon color="primary" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <h6>Ayuda</h6>
+    <ion-list lines="none">
+      <ion-item (click)="reports('S.O.S')">
+        <ion-label>
+          <ion-icon color="primary" name="help-circle-outline"></ion-icon> S.O.S
+        </ion-label>
+        <ion-icon color="primary" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+      <ion-item (click)="reports('Feedback')">
+        <ion-label>
+          <ion-icon color="primary" name="help-buoy-outline"></ion-icon> Feedback
+        </ion-label>
+        <ion-icon color="primary" name="chevron-forward-outline"></ion-icon>
+      </ion-item>
+    </ion-list>
+    <ion-list lines="none">
+      <ion-item (click)="logout()">
+        <ion-label>
+          <ion-icon color="primary" name="power-outline"></ion-icon>
+          Cerrar Sesión
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

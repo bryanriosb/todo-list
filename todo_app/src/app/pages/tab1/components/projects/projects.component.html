@@ -1,0 +1,52 @@
+<ion-item lines="none">
+  <ion-label>
+    <h1>Útimos 10 projectos</h1>
+  </ion-label>
+</ion-item>
+
+<ng-container *ngIf="!showSkeleton; else skeleton">
+  <div class="slides ion-margin-bottom" *ngIf="projects.length > 0; else not">
+    <ion-slides [options]="slidesOptions">
+      <ion-slide *ngFor="let project of projects">
+        <ion-card (click)="getProjectDetails(project)">
+          <ion-card-header>
+            <ion-toolbar color="translucent">
+              <ion-chip color="secondary" slot="end" class="ion-margin-bottom">
+                <ion-label style="color: white;">
+                  {{project.alias | titlecase}}
+                </ion-label>
+              </ion-chip>
+            </ion-toolbar>
+            <ion-card-subtitle class="ion-text-left date">
+              {{project.creationDate | date: 'fullDate'}}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="card-content">
+            <div class="title-container">
+              <p class="ion-text-left card-title">
+                {{project.name}}
+              </p>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <ng-template #not>
+    <div class="not-docs">
+      <h4>No tiene proyectos creados</h4>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #skeleton>
+  <div class="slides ion-margin-bottom">
+    <ion-slides [options]="slidesOptions">
+      <ion-slide *ngFor="let s of [1,1]">
+        <ion-skeleton-text class="card-sketch" animated></ion-skeleton-text>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ng-template>
+
+

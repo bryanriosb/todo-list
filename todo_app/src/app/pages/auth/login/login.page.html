@@ -1,0 +1,27 @@
+<ion-content>
+  <div class="main-section ion-padding">
+    <div class="heading ion-padding">
+      <h1>Bienvenido!</h1>
+      <p>Inicie sesión para continuar</p>
+    </div>
+    <div class="form ion-padding">
+      <ion-item>
+        <ion-label position="floating">Corrreo electrónico</ion-label>
+        <ion-input type="email" [formControl]="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type='password' [formControl]="password"></ion-input>
+      </ion-item>
+    </div>
+    <div class="action-buttons ion-padding">
+      <ion-button
+        class="btn-lg-primary"
+        expand="block"
+        (click)="signIn()"
+        [disabled]="username.invalid || password.invalid">
+        Inciar Sesión
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

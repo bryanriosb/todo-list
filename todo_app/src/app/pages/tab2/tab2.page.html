@@ -1,0 +1,48 @@
+
+<ion-content>
+  <ng-container>
+    <div class="header-bg"></div>
+
+    <div class="header-container">
+      <div class="profle-image">
+        <img src="assets/icon/user.svg" alt="profile"/>
+        <ion-label>
+          <h2>{{ user.name }}</h2>
+          <p>ID: {{user.id}}</p>
+        </ion-label>
+      </div>
+    </div>
+
+    <div class="content-container ion-padding">
+      <h6>Datos Personales</h6>
+      <div class="info-container">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-label position="stacked">Cédula de Cíudadanía</ion-label>
+            <ion-input readonly="true" [value]="user.identityCard"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Correo Electrónico</ion-label>
+            <ion-input readonly="true" [value]="user.email"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+      <h6>Regitro</h6>
+      <div class="info-container">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-label position="stacked">Fecha de registro</ion-label>
+            <ion-input readonly="true" value="{{user.creationDate | date:'mediumDate'}}"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Rol</ion-label>
+            <ion-input readonly="true" [value]="user.role"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ng-container>
+  <ion-button (click)="signOut()" expand="block" fill="clear">
+    Cerrar Sesión
+  </ion-button>
+</ion-content>

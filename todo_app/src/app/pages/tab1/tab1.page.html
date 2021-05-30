@@ -1,0 +1,70 @@
+<app-header [title]="'Actividades'" [color]="'primary'"></app-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-item lines="none">
+    <ion-avatar slot="start">
+      <img src="assets/icon/user.svg" alt="profile"/>
+    </ion-avatar>
+    <ion-label>
+      <h1>Hola! {{user.name}}</h1>
+      <p>{{now}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ng-container *ngIf="user.role === 'ADMIN' || user.role === 'LIDER'">
+    <app-projects [projects]="cardsProjects"></app-projects>
+
+    <div class="container">
+      <h3 class="subtitle">Todos los projectos</h3>
+      <ng-container *ngIf="checkprojects; else skeleton">
+        <div class="not-docs" *ngIf="projects.length === 0">
+          <img src="assets/img/contract.png" width="50%" alt="search">
+          <h4>No tiene documentos finalizados</h4>
+        </div>
+
+        <ion-item class="items-container" lines="none" *ngFor="let project of projects">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="2">
+                <ion-button color="primary" fill="clear">
+                  <ion-icon slot="icon-only" name="document-outline"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="8">
+                <ion-label>
+                  <h2 class="item-title">{{ project.name }}</h2>
+                  <h6>{{ project.creationDate | date:'mediumDate' }}</h6>
+                </ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-button color="primary" fill="clear" (click)="getProjectDetails(project)">
+                  <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ng-container>
+
+      <ng-template #skeleton>
+        <ng-container *ngFor="let a of [1,1,1]" >
+          <div class="container-skets">
+            <ion-item lines="none">
+              <ion-grid>
+                <ion-row class="ion-align-items-center">
+                  <ion-skeleton-text animated class="alert-skeleton"></ion-skeleton-text>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </div>
+        </ng-container>
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="user.role === 'USER'">
+    <app-task-actions></app-task-actions>
+  </ng-container>
+
+</ion-content>

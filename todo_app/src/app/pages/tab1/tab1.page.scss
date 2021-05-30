@@ -1,0 +1,42 @@
+ion-header {
+  ion-item {
+    position: relative;
+    top: 20px;
+  }
+}
+
+h1, .subtitle {
+  font-weight: bolder;
+}
+
+ion-content {
+  .container {
+    .items-container {
+      --ion-background-color: rgba(36, 0, 70, .1) !important;
+      --border-radius: 15px;
+      padding: 0;
+      margin: 14px;
+    }
+
+    .item-title {
+      font-weight: 600;
+    }
+  }
+
+  .not-docs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 60%;
+    color: rgb(72, 71, 71);
+  }
+
+  .container-skets {
+    .alert-skeleton{
+      width: 335px;
+      height: 65px;
+      border-radius: 15px;
+    }
+  }
+}

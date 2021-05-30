@@ -24,3 +24,58 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Muli.ttf');
+}
+
+:root {
+  --ion-font-family:  'Muli'!important;
+}
+
+h1 {
+  font-weight: bolder;
+}
+
+p {
+  color: rgb(102, 102, 102);
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.loading-class {
+  border-radius: 4px;
+  --background: var( --ion-color-primary ) !important;
+  --spinner-color: #fff;
+
+  color: #fff;
+}
+
+.btn-lg-primary {
+  height: 48px;
+  --border-radius: 15px !important;
+}
+
+.btn-lg-medium {
+  height: 48px;
+  --border-radius: 15px !important;
+  --background: rgba(36, 0, 70, .1) !important;
+  --color: rgb(26, 26, 26);
+}
+
+.action-sheet-group:not(.select-alert) {
+  --background: var( --ion-color-primary ) !important;
+
+  button {
+    color: white !important;
+  }
+}
